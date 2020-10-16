@@ -20,6 +20,7 @@ class pokemonsList extends Component {
     this.state = {
       actPage: 1,
     };
+    ChangeFilter('All');
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this)
   }
@@ -45,6 +46,13 @@ class pokemonsList extends Component {
   handleFilterChange = typePkm => {
     const { ChangeFilter } = this.props;
     ChangeFilter(typePkm);
+    let newPages = 1;
+    if (typePkm !== 'All') {
+      newPages = 18
+    }      
+    this.setState({
+      actPage: newPages,
+    });
   };
 
   render() {

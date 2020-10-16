@@ -35,51 +35,104 @@ class PokemonsDetails extends Component {
       .then(data => {
         axios.get(url2 + number)
           .then(data2 => {
-            const chainUrl = data2.data.evolution_chain.url
-            axios.get(chainUrl)
-              .then(dataEvolution => {
-                let evChain = dataEvolution.data.chain;
-                const evolution = [];
-                while (evChain !== undefined) {
-                  const evName = evChain.species.name;
-                  let evNumbA = evChain.species.url.split('/');
-                  const evNumb = evNumbA[evNumbA.length-2]
-                  evolution.push({
-                    name: evName,
-                    evNumb: evNumb,
-                    imageEv: pokemons[evNumb - 1].image
-                  })
-                  evChain = evChain.evolves_to[0];
-                }
-                const types = data.data.types.map(type => (type.type.name));
-                const texts = data2.data.flavor_text_entries.filter(item => (item.language.name === 'en'))
-                  .map(text => (text.flavor_text));
-                const txtSize = texts.length;
-                const singleTxt = texts[Math.floor(Math.random() * txtSize)]
-                console.log('here')
-                console.log(data)
-                console.log(data2)
-                console.log(evChain)
-                ChangeDetail(
-                  {
-                    number: data.data.id,
-                    namePkm: data.data.name,
-                    base_experience: data.data.base_experience,
-                    height: data.data.height,
-                    weight: data.data.weight,
-                    image: data.data.sprites.front_default,
-                    capture_rate: data2.data.capture_rate,
-                    types: types,
-                    text: singleTxt, 
-                    habitat: data2.data.habitat.name,
-                    growth_rate: data2.data.growth_rate.name,
-                    shape: data2.data.shape.name,
-                    color: data2.data.color.name,
-                    evolution: evolution,
-                  },
-                );
-                ChangeLoading(false);
-            }).catch(error => (console.log(error)));
+            let chainUrl = 'unknown'
+            if (data2.data.evolution_chain) {
+              chainUrl = data2.data.evolution_chain.url
+            }
+            if (chainUrl !== 'unknown') {
+              axios.get(chainUrl)
+                .then(dataEvolution => {
+                  let evChain = dataEvolution.data.chain;
+                  const evolution = [];
+                  while (evChain !== undefined) {
+                    const evName = evChain.species.name;
+                    let evNumbA = evChain.species.url.split('/');
+                    const evNumb = evNumbA[evNumbA.length-2]
+                    evolution.push({
+                      name: evName,
+                      evNumb: evNumb,
+                      imageEv: pokemons[evNumb - 1].image
+                    })
+                    evChain = evChain.evolves_to[0];
+                  }
+                  const types = data.data.types.map(type => (type.type.name));
+                  const texts = data2.data.flavor_text_entries.filter(item => (item.language.name === 'en'))
+                    .map(text => (text.flavor_text));
+                  const txtSize = texts.length;
+                  const singleTxt = texts[Math.floor(Math.random() * txtSize)]
+                  let habitatName = 'unknown';
+                  if(data2.data.habitat) {
+                    habitatName = data2.data.habitat.name;
+                  }
+                  let growth_rate = 'unknown';
+                  if(data2.data.growth_rate){
+                    growth_rate = data2.data.growth_rate.name
+                  }
+                  let shape = 'unknown';
+                  if(data2.data.shape){
+                    shape = data2.data.shape.name
+                  }
+                  ChangeDetail(
+                    {
+                      number: data.data.id,
+                      namePkm: data.data.name,
+                      base_experience: data.data.base_experience,
+                      height: data.data.height,
+                      weight: data.data.weight,
+                      image: data.data.sprites.front_default,
+                      capture_rate: data2.data.capture_rate,
+                      types: types,
+                      text: singleTxt, 
+                      habitat: habitatName,
+                      growth_rate: growth_rate,
+                      shape: shape,
+                      color: data2.data.color.name,
+                      evolution: evolution,
+                    },
+                  );
+                  ChangeLoading(false);
+              }).catch(error => (console.log(error)));
+            } else {
+              const types = data.data.types.map(type => (type.type.name));
+              const texts = data2.data.flavor_text_entries.filter(item => (item.language.name === 'en'))
+                .map(text => (text.flavor_text));
+              const txtSize = texts.length;
+              const singleTxt = texts[Math.floor(Math.random() * txtSize)]
+              let habitatName = 'unknown';
+              if(data2.data.habitat) {
+                habitatName = data2.data.habitat.name;
+              }                  
+              let growth_rate = 'unknown';
+              if(data2.data.growth_rate){
+                growth_rate = data2.data.growth_rate.name
+              }
+              let shape = 'unknown';
+              if(data2.data.shape){
+                shape = data2.data.shape.name
+              }
+              ChangeDetail(
+                {
+                  number: data.data.id,
+                  namePkm: data.data.name,
+                  base_experience: data.data.base_experience,
+                  height: data.data.height,
+                  weight: data.data.weight,
+                  image: data.data.sprites.front_default,
+                  capture_rate: data2.data.capture_rate,
+                  types: types,
+                  text: singleTxt, 
+                  habitat: habitatName,
+                  growth_rate: growth_rate,
+                  shape: shape,
+                  color: data2.data.color.name,
+                  evolution: [{
+                    name: data.data.name,
+                    evNumb: data.data.id,
+                    imageEv: data.data.sprites.front_default,
+                  }],
+                },
+              );
+            }
         }).catch(error => (console.log(error)));
       }).catch(error => (console.log(error)));
   }
@@ -143,16 +196,4 @@ class PokemonsDetails extends Component {
   }
 };
 
-/*
-<div className="evolution-path">
-Evo obj:
-{
- detail.evolution.map(item => (
-   <div> 
-     {item.name}
-   </div>)
- )
-}
-</div>
-*/
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PokemonsDetails));
