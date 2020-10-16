@@ -19,9 +19,7 @@ const FilterType = ({ changeFilter }) => {
       'ice',
       'dragon',
       'dark',
-      'fairy',
-      'unknown',
-      'shadow'
+      'fairy'
     ];
   return (
     <div>

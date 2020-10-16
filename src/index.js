@@ -5,25 +5,39 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import combinedReducer from './reducers';
+import axios from 'axios';
+import { CreatePokemon, ChangeLoading } from './actions';
 
 const pokeIniti = {
-  pokemons: [
-    {
-      name: 'pikachu',
-      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
-      types: ['electric'],
-    },
-    {
-      name: 'slowpoke',
-      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png',
-      types: ['water', 'psychic'],
-    },
-  ],
+  pokemons: [],
   filter: 'All',
   message: '',
 };
 
 const store = createStore(combinedReducer, pokeIniti);
+
+let i;
+const maxPkm = 893
+for (i = 1; i <= maxPkm; i++) {
+  const url = 'https://pokeapi.co/api/v2/pokemon/';
+  const numberPkm = i;
+  axios.get(url + numberPkm)
+    .then(data => {
+      let types = data.data.types.map(type => (type.type.name));
+      store.dispatch(CreatePokemon(
+        {
+          number: numberPkm,
+          name: data.data.name,
+          image: data.data.sprites.front_default,
+          types: types,
+        },
+      ))
+      if (numberPkm === maxPkm) {
+        store.dispatch(ChangeLoading(false));
+      };
+    }).catch(error => (console.log(error)));
+}
+
 
 ReactDOM.render(
   <React.StrictMode>

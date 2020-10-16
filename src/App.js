@@ -2,7 +2,6 @@ import React from 'react';
 import PokemonsList from './containers/pokemonList';
 import PokemonForm from './containers/formPokemon';
 
-
 function App() {
   return (
     <div className="App">

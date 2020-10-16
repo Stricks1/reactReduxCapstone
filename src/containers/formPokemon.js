@@ -23,6 +23,7 @@ class PokemonForm extends Component {
         let types = data.data.types.map(type => (type.type.name));
         CreatePokemon(
           {
+            number: data.data.id,
             name: data.data.name,
             image: data.data.sprites.front_default,
             types: types,

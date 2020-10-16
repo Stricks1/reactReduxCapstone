@@ -3,12 +3,13 @@ import '../index.css';
 import PropTypes from 'prop-types';
 
 const Pokemon = ({ pokemon, remove }) => {
-  const { name, image, types } = pokemon;
+  const { number, name, image, types } = pokemon;
   return ( 
     <div className='pokemon-card'>
       <div className='d-flex-around'>
+          #{number}
+          {' '}
           {name.charAt(0).toUpperCase() + name.slice(1)}
-          <button type="button" onClick={() => remove(pokemon)}>X</button>
       </div>
       <img src={image} alt={name}/>
       <div>Types</div>
