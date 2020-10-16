@@ -17,10 +17,15 @@ const mapDispatchToProps = {
 class pokemonsList extends Component {  
   constructor(props) {
     super(props);
-    this.state = {
-      actPage: 1,
-    };
-    ChangeFilter('All');
+    if(props.filter === 'All'){
+      this.state = {
+        actPage: 1,
+      };
+    } else {
+      this.state = {
+        actPage: 18,
+      };
+    }
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this)
   }
@@ -59,7 +64,7 @@ class pokemonsList extends Component {
     const { pokemons, filter, loading } = this.props;
     return (
       <div>
-        <FilterType changeFilter={this.handleFilterChange} />
+        <FilterType changeFilter={this.handleFilterChange} filter={filter} />
         { loading && 
           <div> Loading... {this.state.actPage}</div> 
         }

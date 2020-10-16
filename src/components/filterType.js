@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FilterType = ({ changeFilter }) => {
+const FilterType = ({ changeFilter, filter }) => {
   const TYPES = ['normal',
       'fighting',
       'flying',
@@ -25,7 +25,7 @@ const FilterType = ({ changeFilter }) => {
     <div>
       <label htmlFor="selType">
         Pokemon Type:
-        <select name="selType" id="selType" onChange={e => changeFilter(e.target.value)}>
+        <select name="selType" id="selType" value={filter} onChange={e => changeFilter(e.target.value)}>
           {
             ['All', ...TYPES].map(item => (
               <option key={item} value={item}>{item}</option>

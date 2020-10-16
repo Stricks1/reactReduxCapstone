@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { ChangeDetail, ChangeLoading, CreatePokemon } from '../actions';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import detail from '../reducers/detail';
 
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
@@ -149,7 +148,7 @@ class PokemonsDetails extends Component {
         }
         { !loading &&
           <>
-            <div className="pok-details">
+            <div className="pok-details" key={'#' + detail.number + ' ' + detail.namePkm}>
               <div>
                 Name: {'#' + detail.number + ' ' + detail.namePkm}
                 Base Exp: {detail.base_experience}
