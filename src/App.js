@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import PokemonsList from './containers/pokemonList';
-import PokemonForm from './containers/formPokemon';
+//import PokemonForm from './containers/formPokemon';
 import PokemonsDetails from './containers/pokemonDetails';
 
 function App() {

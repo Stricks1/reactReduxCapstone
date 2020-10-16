@@ -8,16 +8,10 @@ import combinedReducer from './reducers';
 import axios from 'axios';
 import { CreatePokemon, ChangeLoading } from './actions';
 
-const pokeIniti = {
-  pokemons: [],
-  filter: 'All',
-  message: '',
-};
-
-const store = createStore(combinedReducer, pokeIniti);
+const store = createStore(combinedReducer);
 
 let i;
-const maxPkm = 150
+const maxPkm = 893
 for (i = 1; i <= maxPkm; i++) {
   const url = 'https://pokeapi.co/api/v2/pokemon/';
   const numberPkm = i;
@@ -29,9 +23,6 @@ for (i = 1; i <= maxPkm; i++) {
           page: (numberPkm / 50),
           number: numberPkm,
           name: data.data.name,
-          height: data.data.height,
-          weight: data.data.weight,
-          base_experience: data.data.base_experience,
           image: data.data.sprites.front_default,
           types: types,
         },

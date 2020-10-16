@@ -41,10 +41,10 @@ const ChangeLoading = isLoading => (
   }
 );
 
-const ChangeDetail = details => (
+const ChangeDetail = detail => (
   {
     type: CHANGE_DETAIL,
-    details,
+    detail,
   }
 );
 
