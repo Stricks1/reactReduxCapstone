@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ChangeDetail, ChangeLoading, CreatePokemon } from '../actions';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import detail from '../reducers/detail';
 
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
@@ -24,6 +25,7 @@ class PokemonsDetails extends Component {
   componentDidMount() {
     const { number } = this.props.match.params;
     const { ChangeDetail, ChangeLoading, pokemons } = this.props;
+    ChangeDetail({});
     if (pokemons.length === 0) {
       return
     }
@@ -42,8 +44,6 @@ class PokemonsDetails extends Component {
                   const evName = evChain.species.name;
                   let evNumbA = evChain.species.url.split('/');
                   const evNumb = evNumbA[evNumbA.length-2]
-                  console.log(evNumb)
-                  console.log(pokemons)
                   evolution.push({
                     name: evName,
                     evNumb: evNumb,
@@ -56,8 +56,14 @@ class PokemonsDetails extends Component {
                   .map(text => (text.flavor_text));
                 const txtSize = texts.length;
                 const singleTxt = texts[Math.floor(Math.random() * txtSize)]
+                console.log('here')
+                console.log(data)
+                console.log(data2)
+                console.log(evChain)
                 ChangeDetail(
                   {
+                    number: data.data.id,
+                    namePkm: data.data.name,
                     base_experience: data.data.base_experience,
                     height: data.data.height,
                     weight: data.data.weight,
@@ -68,11 +74,11 @@ class PokemonsDetails extends Component {
                     habitat: data2.data.habitat.name,
                     growth_rate: data2.data.growth_rate.name,
                     shape: data2.data.shape.name,
+                    color: data2.data.color.name,
                     evolution: evolution,
                   },
                 );
                 ChangeLoading(false);
-                console.log(evolution)
             }).catch(error => (console.log(error)));
         }).catch(error => (console.log(error)));
       }).catch(error => (console.log(error)));
@@ -80,12 +86,8 @@ class PokemonsDetails extends Component {
   
   render() {
     const { pokemons, detail, loading } = this.props;
-    console.log(detail.evolution);
     if (pokemons.length === 0) {
       return <Redirect to="/" />
-    }
-    if (detail.evolution) {
-    console.log(detail.evolution[0].name);
     }
     return (
       <>
@@ -96,11 +98,26 @@ class PokemonsDetails extends Component {
           <>
             <div className="pok-details">
               <div>
+                Name: {'#' + detail.number + ' ' + detail.namePkm}
                 Base Exp: {detail.base_experience}
                 height: {detail.height}
                 weight: {detail.weight}
-                image: {detail.image}
+                <img src={detail.image} alt={detail.namePkm}/>
                 capture_rate: {detail.capture_rate}
+                text: {detail.text}
+                <div>
+                habitat: {detail.habitat}
+                growth_rate: {detail.growth_rate}
+                shape: {detail.shape}
+                color: {detail.color}
+                </div>
+                <div>Types</div>
+                <ul>
+                  {
+                    detail.types &&
+                    detail.types.map(type => (<li key={type}>{type}</li>))
+                  }
+                </ul>
               </div>
             </div>
             <div className="evolution-path">
@@ -108,7 +125,7 @@ class PokemonsDetails extends Component {
               {
                  detail.evolution && detail.evolution.map(item => (
                  <div>  
-                   <div> 
+                   <div key={item.evNumb}> 
                      {item.evNumb + ' '}                     
                      {item.name}
                    </div>
