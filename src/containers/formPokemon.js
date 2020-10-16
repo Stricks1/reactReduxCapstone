@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CreatePokemon, ChangeMessage } from '../actions';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 class PokemonForm extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class PokemonForm extends Component {
 
   render() {
     const { message } = this.props;
+    const { number } = this.props.match.params;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -73,6 +75,9 @@ class PokemonForm extends Component {
             Add Pokemon
           </button>
           <span>{message}</span>
+        </div>
+        <div>
+          Info {number}
         </div>
       </form>
     );
@@ -93,4 +98,4 @@ PokemonForm.propTypes = {
   CreatePokemon: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PokemonForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PokemonForm));

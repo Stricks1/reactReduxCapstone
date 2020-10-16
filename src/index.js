@@ -17,7 +17,7 @@ const pokeIniti = {
 const store = createStore(combinedReducer, pokeIniti);
 
 let i;
-const maxPkm = 893
+const maxPkm = 150
 for (i = 1; i <= maxPkm; i++) {
   const url = 'https://pokeapi.co/api/v2/pokemon/';
   const numberPkm = i;
@@ -26,8 +26,12 @@ for (i = 1; i <= maxPkm; i++) {
       let types = data.data.types.map(type => (type.type.name));
       store.dispatch(CreatePokemon(
         {
+          page: (numberPkm / 50),
           number: numberPkm,
           name: data.data.name,
+          height: data.data.height,
+          weight: data.data.weight,
+          base_experience: data.data.base_experience,
           image: data.data.sprites.front_default,
           types: types,
         },

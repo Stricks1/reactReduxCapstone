@@ -3,6 +3,7 @@ const REMOVE_POKE = 'REMOVE_POKE';
 const CHANGE_MESS = 'CHANGE_MESS';
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const CHANGE_LOAD = 'CHANGE_LOAD';
+const CHANGE_DETAIL = 'CHANGE_DETAIL';
 
 const CreatePokemon = pokemon => (
   {
@@ -40,6 +41,13 @@ const ChangeLoading = isLoading => (
   }
 );
 
+const ChangeDetail = details => (
+  {
+    type: CHANGE_DETAIL,
+    details,
+  }
+);
+
 export {
-  RemovePokemon, CreatePokemon, ChangeMessage, ChangeFilter, ChangeLoading, REMOVE_POKE, CREATE_POKE, CHANGE_MESS, CHANGE_FILTER, CHANGE_LOAD
+  RemovePokemon, CreatePokemon, ChangeMessage, ChangeFilter, ChangeLoading, ChangeDetail, REMOVE_POKE, CREATE_POKE, CHANGE_MESS, CHANGE_FILTER, CHANGE_LOAD, CHANGE_DETAIL
 };

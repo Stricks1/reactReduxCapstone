@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { ChangeMessage, RemovePokemon, ChangeFilter } from '../actions';
+import { ChangeFilter } from '../actions';
 import Pokemon from '../components/pokemon';
 import FilterType from '../components/filterType';
 
@@ -11,38 +11,61 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  RemovePokemon,
-  ChangeMessage,
   ChangeFilter,
 };
 
-const pokemonsList = ({
-  pokemons, RemovePokemon, ChangeMessage, filter, ChangeFilter, loading
-}) => {
-  const handleRemovePokemon = book => {
-    RemovePokemon(book);
-    ChangeMessage('Pokemon Removed!');
-  };
+class pokemonsList extends Component {  
+  constructor(props) {
+    super(props);
+    this.state = {
+      actPage: 1,
+    };
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleScroll = this.handleScroll.bind(this)
+  }
 
-  const handleFilterChange = typePkm => {
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll() {
+    if (this.state.actPage < 18) {
+      if((window.innerHeight + window.scrollY) >= (document.body.offsetHeight -500)) {
+        this.setState({
+          actPage: this.state.actPage + 1,
+        });
+      }
+    }
+  }
+
+  handleFilterChange = typePkm => {
+    const { ChangeFilter } = this.props;
     ChangeFilter(typePkm);
   };
 
-  return (
-    <div>
-      <FilterType changeFilter={handleFilterChange} />
-      { loading && 
-        <div> Loading...</div> 
-      }
-      <div className='cards-container'>
-        {
-          !loading && 
-          pokemons.map(pokemon => (<Pokemon key={pokemon.name} pokemon={pokemon} remove={handleRemovePokemon}/>))
-           .filter(item => (item.props.pokemon.types.includes(filter) || filter === 'All'))
+  render() {
+    const { pokemons, filter, loading } = this.props;
+    return (
+      <div>
+        <FilterType changeFilter={this.handleFilterChange} />
+        { loading && 
+          <div> Loading... {this.state.actPage}</div> 
         }
+        <div className='cards-container'>
+          {
+            !loading && 
+            pokemons.map(pokemon => (<Pokemon key={pokemon.name} pokemon={pokemon}/>))
+             .filter(item => (item.props.pokemon.types.includes(filter) || filter === 'All'))
+             .filter(item => (item.props.pokemon.page <= this.state.actPage))
+          }
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(pokemonsList);

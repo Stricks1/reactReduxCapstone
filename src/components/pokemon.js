@@ -1,24 +1,27 @@
 import React from 'react';
 import '../index.css';
 import PropTypes from 'prop-types';
+import { withRouter, Link } from 'react-router-dom';
 
-const Pokemon = ({ pokemon, remove }) => {
+const Pokemon = ({ pokemon }) => {
   const { number, name, image, types } = pokemon;
   return ( 
-    <div className='pokemon-card'>
-      <div className='d-flex-around'>
-          #{number}
-          {' '}
-          {name.charAt(0).toUpperCase() + name.slice(1)}
+    <Link to={`/pokemon/${number}`} id="link-detail">
+      <div className='pokemon-card'>
+        <div className='d-flex-around'>
+            #{number}
+            {' '}
+            {name.charAt(0).toUpperCase() + name.slice(1)}
+        </div>
+        <img src={image} alt={name}/>
+        <div>Types</div>
+        <ul>
+          {
+            types.map(type => (<li key={type}>{type}</li>))
+          }
+        </ul>
       </div>
-      <img src={image} alt={name}/>
-      <div>Types</div>
-      <ul>
-        {
-          types.map(type => (<li key={type}>{type}</li>))
-        }
-      </ul>
-    </div>
+    </Link>
   );
 };
 
@@ -28,7 +31,6 @@ Pokemon.propTypes = {
     image: PropTypes.string.isRequired,
     types: PropTypes.array.isRequired,
   }).isRequired,
-  remove: PropTypes.func.isRequired,
 };
 
-export default Pokemon;
+export default withRouter(Pokemon);
