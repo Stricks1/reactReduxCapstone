@@ -82,6 +82,14 @@ class PokemonsDetails extends Component {
                   if (data2.data.shape) {
                     shape = data2.data.shape.name;
                   }
+                  let color = 'unknown';
+                  if (data2.data.color) {
+                    color = data2.data.color.name;
+                  }
+                  let captureRate = 'unknown';
+                  if (data2.data.capture_rate) {
+                    captureRate = data2.data.capture_rate;
+                  }
                   ChangeDetail(
                     {
                       number: data.data.id,
@@ -90,13 +98,13 @@ class PokemonsDetails extends Component {
                       height: data.data.height,
                       weight: data.data.weight,
                       image: data.data.sprites.front_default,
-                      captureRate: data2.data.capture_rate,
+                      captureRate,
                       types,
                       text: singleTxt,
                       habitat: habitatName,
                       growthRate,
                       shape,
-                      color: data2.data.color.name,
+                      color,
                       evolution,
                     },
                   );
@@ -120,6 +128,14 @@ class PokemonsDetails extends Component {
               if (data2.data.shape) {
                 shape = data2.data.shape.name;
               }
+              let color = 'unknown';
+              if (data2.data.color) {
+                color = data2.data.color.name;
+              }
+              let captureRate = 'unknown';
+              if (data2.data.capture_rate) {
+                captureRate = data2.data.capture_rate;
+              }
               ChangeDetail(
                 {
                   number: data.data.id,
@@ -128,13 +144,13 @@ class PokemonsDetails extends Component {
                   height: data.data.height,
                   weight: data.data.weight,
                   image: data.data.sprites.front_default,
-                  captureRate: data2.data.capture_rate,
+                  captureRate,
                   types,
                   text: singleTxt,
                   habitat: habitatName,
                   growthRate,
                   shape,
-                  color: data2.data.color.name,
+                  color,
                   evolution: [{
                     name: data.data.name,
                     evNumb: data.data.id,
