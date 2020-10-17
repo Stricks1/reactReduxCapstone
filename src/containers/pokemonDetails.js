@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
@@ -51,20 +52,42 @@ class PokemonsDetails extends Component {
             if (chainUrl !== 'unknown') {
               axios.get(chainUrl)
                 .then(dataEvolution => {
-                  let evChain = dataEvolution.data.chain;
+                  const evChain = dataEvolution.data.chain;
                   const evolution = [];
-                  while (evChain !== undefined) {
-                    const evName = evChain.species.name;
-                    const evNumbA = evChain.species.url.split('/');
-                    const evNumb = evNumbA[evNumbA.length - 2];
+                  let evolveFrom = 0;
+                  const evName = evChain.species.name;
+                  const evNumbA = evChain.species.url.split('/');
+                  const evNumb = evNumbA[evNumbA.length - 2];
+                  evolution.push({
+                    name: evName,
+                    evNumb,
+                    imageEv: pokemons[evNumb - 1].image,
+                    evolveFrom,
+                  });
+                  evolveFrom = evNumb;
+                  evChain.evolves_to.forEach(element => {
+                    const evName2 = element.species.name;
+                    const evNumbA2 = element.species.url.split('/');
+                    const evNumb2 = evNumbA2[evNumbA2.length - 2];
                     evolution.push({
-                      name: evName,
-                      evNumb,
-                      imageEv: pokemons[evNumb - 1].image,
+                      name: evName2,
+                      evNumb: evNumb2,
+                      imageEv: pokemons[evNumb2 - 1].image,
+                      evolveFrom,
                     });
-                    evChain = evChain.evolves_to;
-                    [evChain] = evChain;
-                  }
+                    element.evolves_to.forEach(element2 => {
+                      const evolveFrom2 = evNumb2;
+                      const evName3 = element2.species.name;
+                      const evNumbA3 = element2.species.url.split('/');
+                      const evNumb3 = evNumbA3[evNumbA3.length - 2];
+                      evolution.push({
+                        name: evName3,
+                        evNumb: evNumb3,
+                        imageEv: pokemons[evNumb3 - 1].image,
+                        evolveFrom: evolveFrom2,
+                      });
+                    });
+                  });
                   const types = data.data.types.map(type => (type.type.name));
                   const texts = data2.data.flavor_text_entries.filter(item => (item.language.name === 'en'))
                     .map(text => (text.flavor_text));
@@ -105,7 +128,9 @@ class PokemonsDetails extends Component {
                       growthRate,
                       shape,
                       color,
-                      evolution,
+                      evolution: evolution.sort(
+                        (a, b) => parseInt(a.evolveFrom, 10) - parseInt(b.evolveFrom, 10),
+                      ),
                     },
                   );
                   ChangeLoading(false);
