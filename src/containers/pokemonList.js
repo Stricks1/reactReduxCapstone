@@ -22,8 +22,8 @@ const mapDispatchToProps = {
 class PokemonsList extends Component {
   constructor(props) {
     super(props);
-    const { filter } = props;
-    if (filter === 'All') {
+    const { filter, filterName } = props;
+    if (filter === 'All' && filterName === '') {
       this.state = {
         actPage: 1,
       };
