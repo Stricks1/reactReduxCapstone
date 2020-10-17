@@ -4,6 +4,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { ChangeDetail, ChangeLoading, ChangeMessage } from '../actions';
+import loadImg from '../assets/loadImg.gif';
 
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
@@ -155,7 +156,11 @@ class PokemonsDetails extends Component {
     return (
       <>
         { loading
-          && <div> Loading Details...</div>}
+          && (
+          <div className="bg-load margin-top-15">
+            <img src={loadImg} alt="loadingImage" />
+          </div>
+          )}
         { !loading
           && (
           <>

@@ -11,10 +11,13 @@ const Pokemon = ({ pokemon }) => {
     <div>
       <Link className="pokemon-card" to={`/pokemon/${number}`} id="link-detail">
         <div className="d-flex-around title-card">
-          #
-          {number}
-          {' '}
-          {name.charAt(0).toUpperCase() + name.slice(1)}
+          <span>
+            #
+            {number}
+          </span>
+          <span>
+            {name.charAt(0).toUpperCase() + name.slice(1)}
+          </span>
         </div>
         <img className="card-image" src={image} alt={name} />
         <div className="type-container">

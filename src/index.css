@@ -38,6 +38,17 @@ code {
   align-self: center;
 }
 
+.margin-top-15 {
+  margin-top:15%;
+}
+
+.bg-load {
+  width: 50vh;
+  height: 50vh;
+  opacity: 0.9;
+  margin: auto;
+}
+
 .header-Nav {
   display: flex;
   justify-content: space-between;
@@ -116,6 +127,9 @@ code {
 .title-card {
   font-weight: bold;
   font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pokemon-card:hover .title-card {

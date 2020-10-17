@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ChangeFilter } from '../actions';
 import Pokemon from '../components/pokemon';
 import FilterType from '../components/filterType';
+import loadImg from '../assets/loadImg.gif';
 
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
@@ -73,10 +74,8 @@ class PokemonsList extends Component {
         </div>
         { loading
           && (
-          <div>
-            {' '}
-            Loading...
-            {actPage}
+          <div className="bg-load">
+            <img src={loadImg} alt="loadingImage" />
           </div>
           )}
         <div className="cards-container">
