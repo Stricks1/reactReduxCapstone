@@ -24,11 +24,13 @@ const FilterType = ({ changeFilter, filter }) => {
   return (
     <div>
       <label htmlFor="selType">
-        Pokemon Type:
-        <select name="selType" id="selType" value={filter} onChange={e => changeFilter(e.target.value)}>
+        <span>Pokemon Type: </span>
+        <select className="select-box" name="selType" id="selType" value={filter} onChange={e => changeFilter(e.target.value)}>
           {
             ['All', ...TYPES].map(item => (
-              <option key={item} value={item}>{item}</option>
+              <option key={item} value={item}>
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </option>
             ))
           }
         </select>

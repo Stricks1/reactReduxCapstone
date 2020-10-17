@@ -8,23 +8,32 @@ const Pokemon = ({ pokemon }) => {
     number, name, image, types,
   } = pokemon;
   return (
-    <Link to={`/pokemon/${number}`} id="link-detail">
-      <div className="pokemon-card">
-        <div className="d-flex-around">
+    <div>
+      <Link className="pokemon-card" to={`/pokemon/${number}`} id="link-detail">
+        <div className="d-flex-around title-card">
           #
           {number}
           {' '}
           {name.charAt(0).toUpperCase() + name.slice(1)}
         </div>
-        <img src={image} alt={name} />
-        <div>Types</div>
-        <ul>
-          {
-            types.map(type => (<li key={type}>{type}</li>))
-          }
-        </ul>
-      </div>
-    </Link>
+        <img className="card-image" src={image} alt={name} />
+        <div className="type-container">
+          { types.length === 1
+          && (
+            <span className="type-title">Type</span>
+          )}
+          { types.length > 1
+            && (
+              <span className="type-title">Types</span>
+            )}
+          <ul className="type-list">
+            {
+              types.map(type => (<li key={type}>{type}</li>))
+            }
+          </ul>
+        </div>
+      </Link>
+    </div>
   );
 };
 

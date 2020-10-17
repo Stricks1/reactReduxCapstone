@@ -13,15 +13,16 @@ function App() {
   return (
     <Router>
       <div className="header-Nav">
-        <h1>Header for Pokemons</h1>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/">About</Link>
-          </li>
-        </ul>
+        <div className="flex-start">
+          <Link className="clear-link" to="/">
+            <h1 className="self-center color-black">Header for Pokemons</h1>
+          </Link>
+          <ul className="self-center list-links">
+            <li>
+              <Link className="clear-link color-white" to="/">Home</Link>
+            </li>
+          </ul>
+        </div>
         <Message />
       </div>
       <div>

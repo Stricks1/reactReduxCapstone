@@ -68,7 +68,9 @@ class PokemonsList extends Component {
     const { actPage } = this.state;
     return (
       <div>
-        <FilterType changeFilter={this.handleFilterChange} filter={filter} />
+        <div className="filter-container">
+          <FilterType changeFilter={this.handleFilterChange} filter={filter} />
+        </div>
         { loading
           && (
           <div>

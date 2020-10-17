@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const Message = ({ message }) => (
-  <div className="info-message">
+  <div className="info-message self-center">
     {message}
   </div>
 );
