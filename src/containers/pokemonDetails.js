@@ -8,6 +8,7 @@ import { ChangeDetail, ChangeLoading, ChangeMessage } from '../actions';
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
   detail: state.detail,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = {
@@ -140,6 +141,7 @@ class PokemonsDetails extends Component {
                   }],
                 },
               );
+              ChangeLoading(false);
             }
           }).catch(error => (ChangeMessage(`API error ${error}`)));
       }).catch(error => (ChangeMessage(`API error ${error}`)));
@@ -227,7 +229,6 @@ class PokemonsDetails extends Component {
 PokemonsDetails.defaultProps = {
   pokemons: [],
   detail: {},
-  loading: false,
 };
 
 PokemonsDetails.propTypes = {
@@ -255,7 +256,7 @@ PokemonsDetails.propTypes = {
     color: PropTypes.string,
     evolution: PropTypes.arrayOf(PropTypes.object),
   }),
-  loading: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
   ChangeMessage: PropTypes.func.isRequired,
 };
 
