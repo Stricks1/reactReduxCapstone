@@ -157,8 +157,8 @@ class PokemonsDetails extends Component {
       <>
         { loading
           && (
-          <div className="bg-load margin-top-15">
-            <img src={loadImg} alt="loadingImage" />
+          <div className="bg-load">
+            <img className="margin-top-30" src={loadImg} alt="loadingImage" />
           </div>
           )}
         { !loading
