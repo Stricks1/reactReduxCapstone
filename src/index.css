@@ -113,13 +113,13 @@ code {
   box-shadow: 7px 5px 20px 0 rgba(228, 66, 61, 0.671);
 }
 
-.pokemon-card:hover .title-card {
-  color: #dd544c;
-}
-
 .title-card {
   font-weight: bold;
   font-size: 18px;
+}
+
+.pokemon-card:hover .title-card {
+  color: #dd544c;
 }
 
 .card-image {
