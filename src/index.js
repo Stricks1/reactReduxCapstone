@@ -11,7 +11,7 @@ import { CreatePokemon, ChangeLoading, ChangeMessage } from './actions';
 const store = createStore(combinedReducer);
 
 let i;
-const maxPkm = 893;
+const maxPkm = 151;
 for (i = 1; i <= maxPkm; i += 1) {
   const url = 'https://pokeapi.co/api/v2/pokemon/';
   const numberPkm = i;

@@ -8,12 +8,12 @@ class PokemonFiltName extends Component {
   }
 
   render() {
-    const { changeName } = this.props;
+    const { changeName, filterName } = this.props;
     return (
       <div className="margin-y">
         <label htmlFor="txtName">
           Pokemon Name:
-          <input className="margin-left" type="text" id="txtName" name="txtName" onChange={() => changeName(this.name.value.toLowerCase())} ref={input => { (this.name = input); }} placeholder="Pokemon name..." />
+          <input className="margin-left" type="text" id="txtName" name="txtName" value={filterName} onChange={() => changeName(this.name.value.toLowerCase())} ref={input => { (this.name = input); }} placeholder="Pokemon name..." />
         </label>
       </div>
     );
@@ -22,6 +22,7 @@ class PokemonFiltName extends Component {
 
 PokemonFiltName.propTypes = {
   changeName: PropTypes.func.isRequired,
+  filterName: PropTypes.string.isRequired,
 };
 
 export default PokemonFiltName;

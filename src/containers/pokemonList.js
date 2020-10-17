@@ -89,7 +89,7 @@ class PokemonsList extends Component {
       <div>
         <div className="filter-container">
           <FilterType changeFilter={this.handleFilterChange} filter={filter} />
-          <PokemonFiltName changeName={this.handleFilterName} />
+          <PokemonFiltName changeName={this.handleFilterName} filterName={filterName} />
         </div>
         { loading
           && (
