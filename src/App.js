@@ -15,7 +15,7 @@ function App() {
       <div className="header-Nav">
         <div className="flex-start">
           <Link className="clear-link" to="/">
-            <h1 className="self-center color-black">Header for Pokemons</h1>
+            <h1 className="self-center color-black">Pokemon Catalog</h1>
           </Link>
           <ul className="self-center list-links">
             <li>

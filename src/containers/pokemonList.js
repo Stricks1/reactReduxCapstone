@@ -75,7 +75,7 @@ class PokemonsList extends Component {
         { loading
           && (
           <div className="bg-load">
-            <img src={loadImg} alt="loadingImage" />
+            <img className="image-load" src={loadImg} alt="loadingImage" />
           </div>
           )}
         <div className="cards-container">
