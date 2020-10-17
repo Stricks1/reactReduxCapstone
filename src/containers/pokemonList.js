@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { ChangeFilter } from '../actions';
+import { ChangeFilter, ChangeFilterName } from '../actions';
 import Pokemon from '../components/pokemon';
 import FilterType from '../components/filterType';
+import PokemonFiltName from '../components/pokemonFiltName';
 import loadImg from '../assets/loadImg.gif';
 
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
   filter: state.filter,
+  filterName: state.filterName,
   loading: state.loading,
 });
 
 const mapDispatchToProps = {
   ChangeFilter,
+  ChangeFilterName,
 };
 
 class PokemonsList extends Component {
@@ -30,6 +33,7 @@ class PokemonsList extends Component {
       };
     }
     this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleFilterName = this.handleFilterName.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
 
@@ -64,13 +68,28 @@ class PokemonsList extends Component {
     });
   }
 
+  handleFilterName(namePkm) {
+    const { ChangeFilterName } = this.props;
+    ChangeFilterName(namePkm);
+    let newPages = 1;
+    if (namePkm !== '') {
+      newPages = 18;
+    }
+    this.setState({
+      actPage: newPages,
+    });
+  }
+
   render() {
-    const { pokemons, filter, loading } = this.props;
+    const {
+      pokemons, filter, loading, filterName,
+    } = this.props;
     const { actPage } = this.state;
     return (
       <div>
         <div className="filter-container">
           <FilterType changeFilter={this.handleFilterChange} filter={filter} />
+          <PokemonFiltName changeName={this.handleFilterName} />
         </div>
         { loading
           && (
@@ -84,6 +103,7 @@ class PokemonsList extends Component {
             && pokemons.map(pokemon => (<Pokemon key={pokemon.name} pokemon={pokemon} />))
               .filter(item => (item.props.pokemon.types.includes(filter) || filter === 'All'))
               .filter(item => (item.props.pokemon.page <= actPage))
+              .filter(item => (item.props.pokemon.name.includes(filterName)))
           }
         </div>
       </div>
@@ -97,8 +117,10 @@ PokemonsList.defaultProps = {
 
 PokemonsList.propTypes = {
   ChangeFilter: PropTypes.func.isRequired,
+  ChangeFilterName: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   filter: PropTypes.string.isRequired,
+  filterName: PropTypes.string.isRequired,
   pokemons: PropTypes.arrayOf(PropTypes.object),
 };
 
