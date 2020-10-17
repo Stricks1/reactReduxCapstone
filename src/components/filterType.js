@@ -3,24 +3,24 @@ import PropTypes from 'prop-types';
 
 const FilterType = ({ changeFilter, filter }) => {
   const TYPES = ['normal',
-      'fighting',
-      'flying',
-      'poison',
-      'ground',
-      'rock',
-      'bug',
-      'ghost',
-      'steel',
-      'fire',
-      'water',
-      'grass',
-      'electric',
-      'psychic',
-      'ice',
-      'dragon',
-      'dark',
-      'fairy'
-    ];
+    'fighting',
+    'flying',
+    'poison',
+    'ground',
+    'rock',
+    'bug',
+    'ghost',
+    'steel',
+    'fire',
+    'water',
+    'grass',
+    'electric',
+    'psychic',
+    'ice',
+    'dragon',
+    'dark',
+    'fairy',
+  ];
   return (
     <div>
       <label htmlFor="selType">
@@ -35,10 +35,11 @@ const FilterType = ({ changeFilter, filter }) => {
       </label>
     </div>
   );
-}
+};
 
 FilterType.propTypes = {
   changeFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
 };
 
 export default FilterType;

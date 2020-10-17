@@ -11,21 +11,20 @@ const CreatePokemon = pokemon => (
     pokemon,
   }
 );
-  
+
 const RemovePokemon = pokemon => (
   {
     type: REMOVE_POKE,
     pokemon,
   }
 );
-  
+
 const ChangeMessage = message => (
   {
     type: CHANGE_MESS,
     message,
   }
 );
-
 
 const ChangeFilter = typePkm => (
   {
@@ -49,5 +48,16 @@ const ChangeDetail = detail => (
 );
 
 export {
-  RemovePokemon, CreatePokemon, ChangeMessage, ChangeFilter, ChangeLoading, ChangeDetail, REMOVE_POKE, CREATE_POKE, CHANGE_MESS, CHANGE_FILTER, CHANGE_LOAD, CHANGE_DETAIL
+  RemovePokemon,
+  CreatePokemon,
+  ChangeMessage,
+  ChangeFilter,
+  ChangeLoading,
+  ChangeDetail,
+  REMOVE_POKE,
+  CREATE_POKE,
+  CHANGE_MESS,
+  CHANGE_FILTER,
+  CHANGE_LOAD,
+  CHANGE_DETAIL,
 };

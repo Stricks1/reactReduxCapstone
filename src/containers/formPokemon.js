@@ -1,9 +1,9 @@
-import React, { Component, } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CreatePokemon, ChangeMessage } from '../actions';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { CreatePokemon, ChangeMessage } from '../actions';
 
 class PokemonForm extends Component {
   constructor(props) {
@@ -21,17 +21,17 @@ class PokemonForm extends Component {
     const url = 'https://pokeapi.co/api/v2/pokemon/';
     axios.get(url + pkmName.value.toLowerCase())
       .then(data => {
-        let types = data.data.types.map(type => (type.type.name));
+        const types = data.data.types.map(type => (type.type.name));
         CreatePokemon(
           {
             number: data.data.id,
             name: data.data.name,
             image: data.data.sprites.front_default,
-            types: types,
+            types,
           },
-        ); 
+        );
         ChangeMessage('Pokemon added');
-      }).catch(error => (ChangeMessage('Pokemon not found!')));
+      }).catch(() => (ChangeMessage('Pokemon not found!')));
   }
 
   handleChange() {
@@ -51,9 +51,9 @@ class PokemonForm extends Component {
     }
     pokemons.forEach(pokemon => {
       if (pokemon.name === name.toLowerCase()) {
-        ChangeMessage('Pokemon already on the list!')
+        ChangeMessage('Pokemon already on the list!');
         callApi = false;
-      } 
+      }
     });
     if (callApi) {
       this.apiCall(this.name);
@@ -63,7 +63,6 @@ class PokemonForm extends Component {
 
   render() {
     const { message } = this.props;
-    const { number } = this.props.match.params;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -77,7 +76,8 @@ class PokemonForm extends Component {
           <span>{message}</span>
         </div>
         <div>
-          Info {number}
+          Info
+          {' '}
         </div>
       </form>
     );
@@ -88,7 +88,7 @@ const mapStateToProps = state => ({
   pokemons: state.pokemons,
   message: state.message,
 });
- 
+
 const mapDispatchToProps = {
   CreatePokemon,
   ChangeMessage,
@@ -96,6 +96,9 @@ const mapDispatchToProps = {
 
 PokemonForm.propTypes = {
   CreatePokemon: PropTypes.func.isRequired,
+  ChangeMessage: PropTypes.func.isRequired,
+  pokemons: PropTypes.arrayOf.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PokemonForm));
