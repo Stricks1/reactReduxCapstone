@@ -179,14 +179,18 @@ h2 {
   align-self: center;
 }
 
-.type-list {
+.type-list,
+.type-list-det {
   display: flex;
   justify-content: space-between;
-  width: 170px;
   text-transform: capitalize;
   padding-left: 0;
   list-style-type: none;
-  width: 100%;
+  width: 170px;
+}
+
+.type-list-det {
+  align-self: center;
 }
 
 .type-list li {
@@ -209,7 +213,8 @@ h2 {
   margin: 0 10px;
 }
 
-.main-info-container {
+.main-info-container,
+.evolution-path {
   display: flex;
   flex-direction: column;
   margin: 10px auto;
@@ -218,10 +223,10 @@ h2 {
   max-width: 900px;
 }
 
-.detail-name {
+.detail-name,
+.evolution-label {
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
-  background-color: #3d7dca;
   width: 30%;
   padding: 10px 35%;
   font-size: 20px;
@@ -230,6 +235,15 @@ h2 {
   justify-content: center;
   color: white;
   white-space: nowrap;
+}
+
+.detail-name {
+  background-color: #3d7dca;
+}
+
+.evolution-label {
+  margin-top: 60px;
+  background-color: #003a70;
 }
 
 .card-detail-container {
@@ -252,7 +266,6 @@ h2 {
   justify-content: center;
 }
 
-
 .flex-details-2 {
   justify-content: space-between;
 }
@@ -272,6 +285,25 @@ h2 {
   margin-bottom: 20px;
 }
 
+.arrow-image {
+  width: 50px;
+  height: 50px;
+  transform: rotate(90deg);
+}
+
+.d-flex {
+  display: flex;
+}
+
+.self-center {
+  align-self: center;
+}
+
+.evolution-images {
+  align-items: center;
+  flex-direction: column;
+}
+
 @media (min-width: 576px) {
   .filter-container {
     flex-direction: row;
@@ -289,10 +321,21 @@ h2 {
   .flex-details {
     flex-direction: row;
   }
+
   .flex-details-2 {
     width: 50%;
   }
+
   .detail-col-1 {
     width: 33%;
+  }
+
+  .arrow-image {
+    transform: rotate(0deg);
+  }
+
+  .evolution-images {
+    justify-content: center;
+    flex-direction: row;
   }
 }

@@ -1,11 +1,11 @@
-/* eslint-disable no-loop-func */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { ChangeDetail, ChangeLoading, ChangeMessage } from '../actions';
 import loadImg from '../assets/loadImg.gif';
+import arrow from '../assets/arrowR.png';
 
 const mapStateToProps = state => ({
   pokemons: state.pokemons,
@@ -23,9 +23,26 @@ class PokemonsDetails extends Component {
   constructor(props) {
     super(props);
     ChangeLoading(true);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      match: {
+        params: { number },
+      },
+    } = this.props;
+    if (prevProps.match.params.number === number) {
+      return;
+    }
+    this.fetchData();
+  }
+
+  fetchData() {
     const {
       match: {
         params: { number },
@@ -203,6 +220,7 @@ class PokemonsDetails extends Component {
 
   render() {
     const { pokemons, detail, loading } = this.props;
+    let lastEv = 0;
     if (pokemons.length === 0) {
       return <Redirect to="/" />;
     }
@@ -261,7 +279,7 @@ class PokemonsDetails extends Component {
                           && (
                             <span className="type-title">Types</span>
                           )}
-                        <ul className="type-list">
+                        <ul className="type-list-det">
                           {
                             detail.types
                             && detail.types.map(type => (<li key={type}>{type}</li>))
@@ -292,20 +310,41 @@ class PokemonsDetails extends Component {
               </div>
             </div>
             <div className="evolution-path">
-              Evolution chain:
-              {
-                 detail.evolution && detail.evolution.map(item => (
-                   <div key={item.evNumb}>
-                     <div>
-                       {`${item.evNumb} `}
-                       {item.name}
-                     </div>
-                     <div>
-                       <img src={item.imageEv} alt={item.name} />
-                     </div>
-                   </div>
-                 ))
-              }
+              <span className="evolution-label">
+                EVOLUTION CHAIN
+              </span>
+              <div className="card-detail-container d-flex evolution-images">
+                {
+                  detail.evolution && detail.evolution.map(item => {
+                    if (lastEv !== item.evolveFrom) {
+                      lastEv = item.evolveFrom;
+                      return (
+                        <div key={item.evNumb} className="d-flex evolution-images">
+                          <div className="self-center">
+                            <img className="arrow-image" src={arrow} alt="arrowEvolve" />
+                          </div>
+                          <Link to={`/pokemon/${item.evNumb}`}>
+                            <div>
+                              <div>
+                                <img src={item.imageEv} alt={item.name} />
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      );
+                    }
+                    return (
+                      <Link key={item.evNumb} to={`/pokemon/${item.evNumb}`}>
+                        <div>
+                          <div>
+                            <img src={item.imageEv} alt={item.name} />
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })
+                }
+              </div>
             </div>
           </div>
           )}
