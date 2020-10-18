@@ -57,10 +57,10 @@ class PokemonsList extends Component {
   }
 
   handleFilterChange(typePkm) {
-    const { ChangeFilter } = this.props;
+    const { ChangeFilter, filterName } = this.props;
     ChangeFilter(typePkm);
     let newPages = 1;
-    if (typePkm !== 'All') {
+    if (typePkm !== 'All' || filterName !== '') {
       newPages = 18;
     }
     this.setState({
@@ -69,10 +69,10 @@ class PokemonsList extends Component {
   }
 
   handleFilterName(namePkm) {
-    const { ChangeFilterName } = this.props;
+    const { ChangeFilterName, filter } = this.props;
     ChangeFilterName(namePkm);
     let newPages = 1;
-    if (namePkm !== '') {
+    if (namePkm !== '' || filter !== 'All') {
       newPages = 18;
     }
     this.setState({
