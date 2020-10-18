@@ -299,14 +299,16 @@ h2 {
   display: flex;
 }
 
-.self-center {
-  align-self: center;
-}
-
 .evolution-images {
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
+}
+
+.evolution-img-cont {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-height: 300px;
 }
 
 @media (min-width: 576px) {
