@@ -24,6 +24,7 @@ class PokemonsDetails extends Component {
     super(props);
     ChangeLoading(true);
     this.fetchData = this.fetchData.bind(this);
+    this.createEvoChart = this.createEvoChart.bind(this);
   }
 
   componentDidMount() {
@@ -218,6 +219,12 @@ class PokemonsDetails extends Component {
       }).catch(error => (ChangeMessage(`API error ${error}`)));
   }
 
+  createEvoChart() {
+    const { detail } = this.props;
+    const { evolution } = detail;
+    return evolution.evolveFrom;
+  }
+
   render() {
     const { pokemons, detail, loading } = this.props;
     let lastEv = 0;
@@ -318,19 +325,20 @@ class PokemonsDetails extends Component {
                   detail.evolution && detail.evolution.map(item => {
                     if (lastEv !== item.evolveFrom) {
                       lastEv = item.evolveFrom;
-                      return (
-                        <div key={item.evNumb} className="d-flex evolution-images">
+                      return ([
+                        <div key={`arrow${item.evNumb}`} className="d-flex evolution-images">
                           <div className="self-center">
                             <img className="arrow-image" src={arrow} alt="arrowEvolve" />
                           </div>
-                          <Link to={`/pokemon/${item.evNumb}`}>
+                        </div>,
+                        <Link key={item.evNumb} to={`/pokemon/${item.evNumb}`}>
+                          <div>
                             <div>
-                              <div>
-                                <img src={item.imageEv} alt={item.name} />
-                              </div>
+                              <img src={item.imageEv} alt={item.name} />
                             </div>
-                          </Link>
-                        </div>
+                          </div>
+                        </Link>,
+                      ]
                       );
                     }
                     return (
@@ -353,11 +361,6 @@ class PokemonsDetails extends Component {
   }
 }
 
-PokemonsDetails.defaultProps = {
-  pokemons: [],
-  detail: {},
-};
-
 PokemonsDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -366,7 +369,7 @@ PokemonsDetails.propTypes = {
   }).isRequired,
   ChangeLoading: PropTypes.func.isRequired,
   ChangeDetail: PropTypes.func.isRequired,
-  pokemons: PropTypes.arrayOf(PropTypes.object),
+  pokemons: PropTypes.arrayOf(PropTypes.object).isRequired,
   detail: PropTypes.shape({
     number: PropTypes.number,
     namePkm: PropTypes.string,
@@ -382,7 +385,7 @@ PokemonsDetails.propTypes = {
     shape: PropTypes.string,
     color: PropTypes.string,
     evolution: PropTypes.arrayOf(PropTypes.object),
-  }),
+  }).isRequired,
   loading: PropTypes.bool.isRequired,
   ChangeMessage: PropTypes.func.isRequired,
 };

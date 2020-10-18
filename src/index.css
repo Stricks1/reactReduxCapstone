@@ -198,6 +198,10 @@ h2 {
   font-size: 12px;
 }
 
+.type-list-det li {
+  margin: auto;
+}
+
 .d-flex-around {
   display: flex;
   justify-content: space-around;
@@ -302,6 +306,7 @@ h2 {
 .evolution-images {
   align-items: center;
   flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 @media (min-width: 576px) {
