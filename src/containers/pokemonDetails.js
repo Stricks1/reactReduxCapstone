@@ -86,6 +86,18 @@ class PokemonsDetails extends Component {
                         imageEv: pokemons[evNumb3 - 1].image,
                         evolveFrom: evolveFrom2,
                       });
+                      element2.evolves_to.forEach(element3 => {
+                        const evolveFrom3 = evNumb3;
+                        const evName4 = element3.species.name;
+                        const evNumbA4 = element3.species.url.split('/');
+                        const evNumb4 = evNumbA4[evNumbA4.length - 2];
+                        evolution.push({
+                          name: evName4,
+                          evNumb: evNumb4,
+                          imageEv: pokemons[evNumb4 - 1].image,
+                          evolveFrom: evolveFrom3,
+                        });
+                      });
                     });
                   });
                   const types = data.data.types.map(type => (type.type.name));
@@ -204,49 +216,79 @@ class PokemonsDetails extends Component {
           )}
         { !loading
           && (
-          <>
+          <div>
             <div className="pok-details" key={`#${detail.number} ${detail.namePkm}`}>
-              <div>
-                Name:
-                {' '}
-                {`#${detail.number} ${detail.namePkm}`}
-                Base Exp:
-                {' '}
-                {detail.baseExperience}
-                height:
-                {' '}
-                {detail.height}
-                weight:
-                {' '}
-                {detail.weight}
-                <img src={detail.image} alt={detail.namePkm} />
-                captureRate:
-                {' '}
-                {detail.captureRate}
-                text:
-                {' '}
-                {detail.text}
-                <div>
-                  habitat:
-                  {' '}
-                  {detail.habitat}
-                  growth_rate:
-                  {' '}
-                  {detail.growthRate}
-                  shape:
-                  {' '}
-                  {detail.shape}
-                  color:
-                  {' '}
-                  {detail.color}
+              <div className="main-info-container">
+                <span className="detail-name">
+                  {`#${detail.number} ${detail.namePkm}`.toUpperCase()}
+                </span>
+                <div className="flex-details card-detail-container">
+                  <div className="detail-col-1">
+                    <img className="detail-img" src={detail.image} alt={detail.namePkm} />
+                    <div className="detail-text">
+                      {detail.text}
+                    </div>
+                  </div>
+                  <div className="flex-details-2">
+                    <div className="margin-right">
+                      <h2>Details Pokemon</h2>
+                      <div className="margin-y">
+                        <span className="bold-label">Height: </span>
+                        {detail.height}
+                      </div>
+                      <div className="margin-y">
+                        <span className="bold-label">Weight: </span>
+                        {detail.weight}
+                      </div>
+                      <div className="margin-y">
+                        <span className="bold-label">Capture Rate: </span>
+                        {detail.captureRate}
+                      </div>
+                      <div className="margin-y">
+                        <span className="bold-label">Growth Rate: </span>
+                        {detail.growthRate}
+                      </div>
+                      <div className="margin-y">
+                        <span className="bold-label">Base Exp: </span>
+                        {detail.baseExperience}
+                      </div>
+                      <div className="type-container">
+                        { detail.types && detail.types.length === 1
+                        && (
+                          <span className="type-title">Type</span>
+                        )}
+                        { detail.types && detail.types.length > 1
+                          && (
+                            <span className="type-title">Types</span>
+                          )}
+                        <ul className="type-list">
+                          {
+                            detail.types
+                            && detail.types.map(type => (<li key={type}>{type}</li>))
+                          }
+                        </ul>
+                      </div>
+                    </div>
+                    <div>
+                      <h2>Details Species</h2>
+                      <div className="margin-y">
+                        <span className="bold-label">Habitat: </span>
+                        {detail.habitat
+                          && detail.habitat.charAt(0).toUpperCase() + detail.habitat.slice(1)}
+                      </div>
+                      <div className="margin-y">
+                        <span className="bold-label">Shape: </span>
+                        {detail.shape
+                         && detail.shape.charAt(0).toUpperCase() + detail.shape.slice(1)}
+                      </div>
+                      <div className="margin-y">
+                        <span className="bold-label">color: </span>
+                        {detail.color
+                         && detail.color.charAt(0).toUpperCase() + detail.color.slice(1)}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>Types</div>
-                <ul>
-                  {
-                    detail.types
-                    && detail.types.map(type => (<li key={type}>{type}</li>))
-                  }
-                </ul>
               </div>
             </div>
             <div className="evolution-path">
@@ -265,7 +307,7 @@ class PokemonsDetails extends Component {
                  ))
               }
             </div>
-          </>
+          </div>
           )}
       </>
     );
