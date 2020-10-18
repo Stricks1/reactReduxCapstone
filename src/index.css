@@ -306,7 +306,7 @@ h2 {
 .evolution-images {
   align-items: center;
   flex-direction: column;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 576px) {
@@ -342,5 +342,9 @@ h2 {
   .evolution-images {
     justify-content: center;
     flex-direction: row;
+  }
+
+  .evolution-img-cont {
+    flex-direction: column;
   }
 }

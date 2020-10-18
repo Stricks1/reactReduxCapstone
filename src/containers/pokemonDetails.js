@@ -158,9 +158,7 @@ class PokemonsDetails extends Component {
                       growthRate,
                       shape,
                       color,
-                      evolution: evolution.sort(
-                        (a, b) => parseInt(a.evolveFrom, 10) - parseInt(b.evolveFrom, 10),
-                      ),
+                      evolution,
                     },
                   );
                   ChangeLoading(false);
@@ -222,12 +220,48 @@ class PokemonsDetails extends Component {
   createEvoChart() {
     const { detail } = this.props;
     const { evolution } = detail;
-    return evolution.evolveFrom;
+    if (!evolution) {
+      return;
+    }
+    const arrOrder = [];
+    const arrEvolver = [];
+    evolution.forEach(item => {
+      let indexActual = 0;
+      if (!arrEvolver.includes(item.evolveFrom)) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key, value] of Object.entries(arrOrder)) {
+          if (value.actual.includes(item.evolveFrom)) {
+            indexActual = parseInt(key, 10) + 1;
+          }
+        }
+        if (indexActual === 0) {
+          arrEvolver.push(item.evolveFrom);
+          indexActual = arrEvolver.indexOf(item.evolveFrom);
+        }
+      }
+      if (arrOrder[indexActual]) {
+        const tot = arrOrder[indexActual].total + 1;
+        const arrImg = arrOrder[indexActual].images;
+        const arrAtu = arrOrder[indexActual].actual;
+        arrImg.push(item.imageEv);
+        arrAtu.push(item.evNumb);
+        arrOrder[indexActual] = {
+          total: tot, images: arrImg, actual: arrAtu,
+        };
+      } else {
+        arrOrder[indexActual] = {
+          total: 1, images: [item.imageEv], actual: [item.evNumb],
+        };
+      }
+    });
+    // eslint-disable-next-line consistent-return
+    return arrOrder;
   }
 
   render() {
     const { pokemons, detail, loading } = this.props;
-    let lastEv = 0;
+    const evoChart = this.createEvoChart();
+    let firstChain = true;
     if (pokemons.length === 0) {
       return <Redirect to="/" />;
     }
@@ -321,37 +355,42 @@ class PokemonsDetails extends Component {
                 EVOLUTION CHAIN
               </span>
               <div className="card-detail-container d-flex evolution-images">
-                {
-                  detail.evolution && detail.evolution.map(item => {
-                    if (lastEv !== item.evolveFrom) {
-                      lastEv = item.evolveFrom;
-                      return ([
-                        <div key={`arrow${item.evNumb}`} className="d-flex evolution-images">
-                          <div className="self-center">
-                            <img className="arrow-image" src={arrow} alt="arrowEvolve" />
-                          </div>
-                        </div>,
-                        <Link key={item.evNumb} to={`/pokemon/${item.evNumb}`}>
-                          <div>
-                            <div>
-                              <img src={item.imageEv} alt={item.name} />
-                            </div>
-                          </div>
-                        </Link>,
-                      ]
-                      );
-                    }
+                { evoChart && evoChart.map(item => {
+                  if (firstChain) {
+                    firstChain = false;
                     return (
-                      <Link key={item.evNumb} to={`/pokemon/${item.evNumb}`}>
+                      <Link key={item.actual[0]} to={`/pokemon/${item.actual[0]}`}>
                         <div>
                           <div>
-                            <img src={item.imageEv} alt={item.name} />
+                            <img src={item.images[0]} alt={item.actual[0]} />
                           </div>
                         </div>
                       </Link>
                     );
-                  })
-                }
+                  }
+                  return (
+                    [
+                      <div key={`arrow${item.actual[0]}`} className="d-flex evolution-images">
+                        <div className="self-center">
+                          <img className="arrow-image" src={arrow} alt="arrowEvolve" />
+                        </div>
+                      </div>,
+                      <div key={`evol${item.actual[0]}`} className="d-flex evolution-img-cont">
+                        {
+                          item.images.map((images, ind) => (
+                            <Link key={item.actual[ind]} to={`/pokemon/${item.actual[ind]}`}>
+                              <div>
+                                <div>
+                                  <img src={images} alt={item.actual[ind]} />
+                                </div>
+                              </div>
+                            </Link>
+                          ))
+                        }
+                      </div>,
+                    ]
+                  );
+                })}
               </div>
             </div>
           </div>
