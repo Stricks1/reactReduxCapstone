@@ -341,7 +341,7 @@ class PokemonsDetails extends Component {
                          && detail.shape.charAt(0).toUpperCase() + detail.shape.slice(1)}
                       </div>
                       <div className="margin-y">
-                        <span className="bold-label">color: </span>
+                        <span className="bold-label">Color: </span>
                         {detail.color
                          && detail.color.charAt(0).toUpperCase() + detail.color.slice(1)}
                       </div>
