@@ -48,9 +48,13 @@ Run `npm start` to run on your local machine server
 - CSS
 - Axious
 - PokeAPI
-- Jest
+
+### Deploy with
 - Heroku
 
+### Test with
+- Jest
+- React Testing Library
 
 ## Contributing
 
