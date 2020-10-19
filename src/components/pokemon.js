@@ -15,7 +15,7 @@ const Pokemon = ({ pokemon }) => {
             #
             {number}
           </span>
-          <span>
+          <span data-testid="pokemon-name">
             {name.charAt(0).toUpperCase() + name.slice(1)}
           </span>
         </div>

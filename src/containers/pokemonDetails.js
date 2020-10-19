@@ -52,8 +52,6 @@ class PokemonsDetails extends Component {
     const {
       ChangeDetail, ChangeLoading, pokemons, ChangeMessage,
     } = this.props;
-    ChangeDetail({});
-    ChangeLoading(true);
     if (pokemons.length === 0) {
       return;
     }
@@ -61,6 +59,8 @@ class PokemonsDetails extends Component {
     const url2 = 'https://pokeapi.co/api/v2/pokemon-species/';
     axios.get(url + number)
       .then(data => {
+        ChangeDetail({});
+        ChangeLoading(true);
         axios.get(url2 + number)
           .then(data2 => {
             let chainUrl = 'unknown';
@@ -269,7 +269,7 @@ class PokemonsDetails extends Component {
       <>
         { loading
           && (
-          <div className="bg-load">
+          <div data-testid="loading-det" className="bg-load">
             <img className="margin-top-30 image-load" src={loadImg} alt="loadingImage" />
           </div>
           )}
@@ -291,11 +291,11 @@ class PokemonsDetails extends Component {
                   <div className="flex-details-2">
                     <div className="margin-right">
                       <h2>Details Pokemon</h2>
-                      <div className="margin-y">
+                      <div data-testid="pokemon-height" className="margin-y">
                         <span className="bold-label">Height: </span>
                         {detail.height}
                       </div>
-                      <div className="margin-y">
+                      <div data-testid="pokemon-weight" className="margin-y">
                         <span className="bold-label">Weight: </span>
                         {detail.weight}
                       </div>

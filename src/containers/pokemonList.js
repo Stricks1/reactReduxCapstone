@@ -93,7 +93,7 @@ class PokemonsList extends Component {
         </div>
         { loading
           && (
-          <div className="bg-load">
+          <div data-testid="loading" className="bg-load">
             <img className="image-load" src={loadImg} alt="loadingImage" />
           </div>
           )}
