@@ -25,7 +25,7 @@ const FilterType = ({ changeFilter, filter }) => {
     <div>
       <label htmlFor="selType">
         <span>Pokemon Type: </span>
-        <select className="select-box margin-left" name="selType" id="selType" value={filter} onChange={e => changeFilter(e.target.value)}>
+        <select data-testid="filter-type" className="select-box margin-left" name="selType" id="selType" value={filter} onChange={e => changeFilter(e.target.value)}>
           {
             ['All', ...TYPES].map(item => (
               <option key={item} value={item}>

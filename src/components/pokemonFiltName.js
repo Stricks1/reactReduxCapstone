@@ -13,7 +13,7 @@ class PokemonFiltName extends Component {
       <div className="margin-y">
         <label htmlFor="txtName">
           Pokemon Name:
-          <input className="margin-left" type="text" id="txtName" name="txtName" value={filterName} onChange={() => changeName(this.name.value.toLowerCase())} ref={input => { (this.name = input); }} placeholder="Pokemon name..." />
+          <input data-testid="filter-name" className="margin-left" type="text" id="txtName" name="txtName" value={filterName} onChange={() => changeName(this.name.value.toLowerCase())} ref={input => { (this.name = input); }} placeholder="Pokemon name..." />
         </label>
       </div>
     );
