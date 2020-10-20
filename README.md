@@ -18,6 +18,7 @@ At the main page in order to not overload the screen, when 'All' is selected, on
 * [Live Demo](#demo)
 * [Installation](#installation)
 * [Built With](#built-with)
+* [Video Presentation](#video-presentation)
 * [Contributing](#contributing)
 * [Acknowledgments](#acknowledgments)
 * [Authors](#author)
@@ -55,6 +56,10 @@ Run `npm start` to run on your local machine server
 ### Test with
 - Jest
 - React Testing Library
+
+## Video Presentation
+
+[Loom video](https://www.loom.com/share/a63f257e6aa54ee1b98c1f0a6df446a4)
 
 ## Contributing
 
