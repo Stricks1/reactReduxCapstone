@@ -52,8 +52,6 @@ class PokemonsDetails extends Component {
     const {
       ChangeDetail, ChangeLoading, pokemons, ChangeMessage,
     } = this.props;
-    ChangeDetail({});
-    ChangeLoading(true);
     if (pokemons.length === 0) {
       return;
     }
@@ -61,6 +59,8 @@ class PokemonsDetails extends Component {
     const url2 = 'https://pokeapi.co/api/v2/pokemon-species/';
     axios.get(url + number)
       .then(data => {
+        ChangeDetail({});
+        ChangeLoading(true);
         axios.get(url2 + number)
           .then(data2 => {
             let chainUrl = 'unknown';
