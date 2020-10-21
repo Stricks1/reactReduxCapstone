@@ -22,6 +22,9 @@ const mapDispatchToProps = {
 class PokemonsDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      orderedEvolution: [],
+    };
     ChangeLoading(true);
     this.fetchData = this.fetchData.bind(this);
     this.createEvoChart = this.createEvoChart.bind(this);
@@ -104,18 +107,6 @@ class PokemonsDetails extends Component {
                         imageEv: pokemons[evNumb3 - 1].image,
                         evolveFrom: evolveFrom2,
                       });
-                      element2.evolves_to.forEach(element3 => {
-                        const evolveFrom3 = evNumb3;
-                        const evName4 = element3.species.name;
-                        const evNumbA4 = element3.species.url.split('/');
-                        const evNumb4 = evNumbA4[evNumbA4.length - 2];
-                        evolution.push({
-                          name: evName4,
-                          evNumb: evNumb4,
-                          imageEv: pokemons[evNumb4 - 1].image,
-                          evolveFrom: evolveFrom3,
-                        });
-                      });
                     });
                   });
                   const types = data.data.types.map(type => (type.type.name));
@@ -162,6 +153,7 @@ class PokemonsDetails extends Component {
                     },
                   );
                   ChangeLoading(false);
+                  this.createEvoChart();
                 }).catch(error => (ChangeMessage(`API error ${error}`)));
             } else {
               const types = data.data.types.map(type => (type.type.name));
@@ -212,6 +204,7 @@ class PokemonsDetails extends Component {
                 },
               );
               ChangeLoading(false);
+              this.createEvoChart();
             }
           }).catch(error => (ChangeMessage(`API error ${error}`)));
       }).catch(error => (ChangeMessage(`API error ${error}`)));
@@ -228,12 +221,11 @@ class PokemonsDetails extends Component {
     evolution.forEach(item => {
       let indexActual = 0;
       if (!arrEvolver.includes(item.evolveFrom)) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key, value] of Object.entries(arrOrder)) {
+        arrOrder.forEach((value, key) => {
           if (value.actual.includes(item.evolveFrom)) {
             indexActual = parseInt(key, 10) + 1;
           }
-        }
+        });
         if (indexActual === 0) {
           arrEvolver.push(item.evolveFrom);
           indexActual = arrEvolver.indexOf(item.evolveFrom);
@@ -254,13 +246,15 @@ class PokemonsDetails extends Component {
         };
       }
     });
-    // eslint-disable-next-line consistent-return
-    return arrOrder;
+    this.setState({
+      orderedEvolution: arrOrder,
+    });
   }
 
   render() {
     const { pokemons, detail, loading } = this.props;
-    const evoChart = this.createEvoChart();
+    const { orderedEvolution } = this.state;
+    const evoChart = orderedEvolution;
     let firstChain = true;
     if (pokemons.length === 0) {
       return <Redirect to="/" />;

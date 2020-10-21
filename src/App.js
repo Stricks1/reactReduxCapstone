@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import PokemonsList from './containers/pokemonList';
 import PokemonsDetails from './containers/pokemonDetails';
-import Message from './components/infoMessages';
+import Message from './containers/infoMessages';
 
 function App() {
   return (
@@ -27,10 +27,10 @@ function App() {
       </div>
       <div>
         <Switch>
-          <Route path="/pokemon/:number">
+          <Route exact path="/pokemon/:number">
             <PokemonsDetails />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <PokemonsList />
           </Route>
         </Switch>
